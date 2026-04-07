@@ -143,7 +143,10 @@ class GetSwitchbotDevices:
         """Return all WoLock/Locks devices with services data."""
         locks = await self._get_devices_by_model("o")
         lock_pros = await self._get_devices_by_model("$")
-        return {**locks, **lock_pros}
+        lock_pros_wifi = await self._get_devices_by_model(b"\x00\x10\xff\x90")
+        lock_pros_wifi2 = await self._get_devices_by_model(b"\x01\x10\xff\x90")
+
+        return {**locks, **lock_pros, **lock_pros_wifi, **lock_pros_wifi2}
 
     async def get_keypads(self) -> dict[str, SwitchBotAdvertisement]:
         """Return all WoKeypad/Keypad devices with services data."""
